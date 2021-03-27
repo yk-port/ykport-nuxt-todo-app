@@ -1,5 +1,13 @@
 <template>
   <div>
+    <ul>
+      <li v-for="todo in todos" :key="todo.id">
+        {{ todo.done }}
+        {{ todo.name }}
+        {{ todo.created }}
+        <button @click="remove(todo.id)">X</button>
+      </li>
+    </ul>
     <form @submit.prevent="add">
       <input v-model="name" />
       <button>add</button>
@@ -15,6 +23,11 @@ export default {
       done: false,
     }
   },
+  computed: {
+    todos() {
+      return this.$store.state.todos.todos
+    },
+  },
   created() {
     this.$store.dispatch('todos/init')
   },
@@ -22,6 +35,9 @@ export default {
     add() {
       this.$store.dispatch('todos/add', this.name)
       this.name = ''
+    },
+    remove(id) {
+      this.$store.dispatch('todos/remove', id)
     },
   },
 }
