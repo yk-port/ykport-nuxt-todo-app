@@ -2,8 +2,12 @@
   <div>
     <ul>
       <li v-for="todo in todos" :key="todo.id">
-        {{ todo.done }}
-        {{ todo.name }}
+        <input
+          type="checkbox"
+          :checked="todo.done"
+          @change="toggleDone(todo)"
+        />
+        <span :class="{ done: todo.done }">{{ todo.name }}</span>
         {{ todo.created }}
         <button @click="remove(todo.id)">X</button>
       </li>
@@ -39,8 +43,15 @@ export default {
     remove(id) {
       this.$store.dispatch('todos/remove', id)
     },
+    toggleDone(todo) {
+      this.$store.dispatch('todos/toggle', todo)
+    },
   },
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.done {
+  text-decoration: line-through;
+}
+</style>
