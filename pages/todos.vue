@@ -8,7 +8,7 @@
           @change="toggleDone(todo)"
         />
         <span :class="{ done: todo.done }">{{ todo.name }}</span>
-        {{ todo.created }}
+        <span>{{ todo.created.$moment().format('YYYY-MM-DD') }}</span>
         <button @click="remove(todo.id)">X</button>
       </li>
     </ul>
